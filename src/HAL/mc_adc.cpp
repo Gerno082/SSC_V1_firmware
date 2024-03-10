@@ -1,8 +1,15 @@
+//Platform includes
+
+
 //local includes
 #include "HAL/include/mc_adc.h"
-
-
 #include "main.h"
+
+
+//External variables
+
+
+//local variables
 
 
 mc_adc::mc_adc(){

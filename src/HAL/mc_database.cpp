@@ -1,5 +1,13 @@
+//Platform includes
 
+//Local includes
 #include "HAL/include/mc_database.h"
+
+
+//External variables
+
+
+//local variables
 
 
 mc_database::mc_database(){

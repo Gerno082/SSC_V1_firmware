@@ -7,6 +7,7 @@
 #include "TASKS/include/mc_control_task.h"
 #include "HAL/include/mc_button.h"
 #include "types.h"
+#include "main.h"
 
 
 //External variables
@@ -36,6 +37,10 @@ void control_task_periodic_execute(){
 
             //run this piece of code only once when entering this state
             if(control_local_state != system_state){
+
+                #ifdef DEBUG_STATES
+                    Debug.println("Entering init state");
+                #endif
                 
                 control_local_state = system_state;
             }
@@ -49,6 +54,10 @@ void control_task_periodic_execute(){
 
             //run this piece of code only once when entering this state
             if(control_local_state != system_state){
+
+                #ifdef DEBUG_STATES
+                    Debug.println("Entering waiting for WiFi state");
+                #endif
                 
                 control_local_state = system_state;
             }
@@ -63,6 +72,10 @@ void control_task_periodic_execute(){
 
             //run this piece of code only once when entering this state
             if(control_local_state != system_state){
+
+                #ifdef DEBUG_STATES
+                    Debug.println("Entering idle state");
+                #endif
                 
                 control_local_state = system_state;
             }
@@ -78,6 +91,10 @@ void control_task_periodic_execute(){
 
             //run this piece of code only once when entering this state
             if(control_local_state != system_state){
+
+                #ifdef DEBUG_STATES
+                    Debug.println("Entering surgery busy state");
+                #endif
                 
                 control_local_state = system_state;
             }

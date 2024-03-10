@@ -1,4 +1,14 @@
+//Platform includes
+
+
+//Local includes
 #include "HAL/include/mc_led.h"
+
+
+//External variables
+
+
+//local variables
 
 
 

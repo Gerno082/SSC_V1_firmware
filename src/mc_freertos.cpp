@@ -1,10 +1,17 @@
-#include "mc_freertos.h"
+//Platform includes
 
+//Local includes
+#include "mc_freertos.h"
 #include "TASKS/include/mc_control_task.h"
 #include "TASKS/include/mc_lcd_task.h"
 #include "TASKS/include/mc_serial_task.h"
 #include "TASKS/include/mc_wifi_task.h"
 
+
+//External variables
+
+
+//local variables
 
 
 //freertos constructor
@@ -24,10 +31,10 @@ mc_freertos::~mc_freertos(){
 void mc_freertos::init(){
 
     //Create the tasks
-    xTaskCreatePinnedToCore(control_task,   "control_task",     15000/*stack depth*/, NULL/*parameters*/, 1/*priority*/, &control_task_handle,  0/*Core ID*/);
-    xTaskCreatePinnedToCore(lcd_task,       "lcd_task",         15000/*stack depth*/, NULL/*parameters*/, 1/*priority*/, &lcd_task_handle,      0/*Core ID*/);
-    xTaskCreatePinnedToCore(serial_task,    "serial_task",      15000/*stack depth*/, NULL/*parameters*/, 1/*priority*/, &serial_task_handle,   0/*Core ID*/);
-    xTaskCreatePinnedToCore(wifi_task,      "wifi_task",        15000/*stack depth*/, NULL/*parameters*/, 1/*priority*/, &wifi_task_handle,     1/*Core ID*/);
+    xTaskCreatePinnedToCore(control_task,   "control_task",     15000/*stack depth*/, NULL/*parameters*/, 5/*priority*/, &control_task_handle,  0/*Core ID*/);
+    xTaskCreatePinnedToCore(lcd_task,       "lcd_task",         15000/*stack depth*/, NULL/*parameters*/, 3/*priority*/, &lcd_task_handle,      0/*Core ID*/);
+    xTaskCreatePinnedToCore(serial_task,    "serial_task",      15000/*stack depth*/, NULL/*parameters*/, 2/*priority*/, &serial_task_handle,   0/*Core ID*/);
+    xTaskCreatePinnedToCore(wifi_task,      "wifi_task",        15000/*stack depth*/, NULL/*parameters*/, 4/*priority*/, &wifi_task_handle,     1/*Core ID*/);
 
 }
 

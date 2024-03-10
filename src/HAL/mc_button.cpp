@@ -1,10 +1,16 @@
-
+//Platform includes
 #include <stdint.h>
 #include <Arduino.h>
 
+//Local includes
 #include "HAL/include/mc_button.h"
-
 #include "main.h"
+
+//External variables
+
+
+//local variables
+
 
 //constructor
 mc_button::mc_button(){

@@ -6,8 +6,10 @@
 #include "HAL/include/mc_led.h"
 #include "main.h"
 
-
+//External variables
 extern mc_led led;
+
+//local variables
 
 
 mc_items::mc_items(){

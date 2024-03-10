@@ -1,14 +1,36 @@
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
-
-
+////////////////////////////////////
+// ---- HARDWARE DEBUG ENABLE ----//
+////////////////////////////////////
 // #define DEBUG_ADC
 // #define DEBUG_BUTTON_PRESS_RELEASE
 // #define DEBUG_CURRENT_BUTTON
 // #define DEBUG_MENU_BUTTON_PRESS_RELEASE
 // #define DEBUG_CURRENT_MENU_BUTTON
-#define DEBUG_ITEMS
+// #define DEBUG_ITEMS
+
+////////////////////////////////////
+// ------ WIFI DEBUG ENABLE ------//
+////////////////////////////////////
+#define DEBUG_WIFI
+
+////////////////////////////////////
+// ------ HTTP DEBUG ENABLE ------//
+////////////////////////////////////
+// #define DEBUG_HTTP
+
+////////////////////////////////////
+// ------ LCD DEBUG ENABLE -------//
+////////////////////////////////////
+// #define DEBUG_LCD
+
+////////////////////////////////////
+// ----- STATES DEBUG ENABLE -----//
+////////////////////////////////////
+// #define DEBUG_STATES
+
 
 #define Debug Serial
 
@@ -17,14 +39,6 @@
 
 extern uint8_t wifi_init_done;
 extern uint8_t lcd_init_done;
-
-
-enum mc_system_states{
-  STATE_INIT = 0,
-  STATE_WAITING_FOR_WIFI = 1,
-  STATE_IDLE = 2,
-  STATE_SURGERY_BUSY = 3
-};
 
 
 

@@ -1,15 +1,21 @@
+//Platform includes
 #include <Arduino.h>
 
+//Local includes
 #include "main.h"
-
-
 #include "mc_freertos.h"
 #include "HAL/include/mc_button.h"
 #include "HAL/include/mc_commands.h"
 #include "HAL/include/mc_led.h"
+#include "types.h"
+
+//External variables
 
 
-
+//global variables
+uint8_t system_state = STATE_INIT;
+uint8_t wifi_init_done = false;
+uint8_t lcd_init_done = false;
 
 
 //define freertos object
@@ -19,15 +25,15 @@ mc_commands commands;
 mc_led      led;
 
 
+//TODO Critical features
+//  TODO WIFI connect, disconnect stateflow
+//  TODO Add HTTP stuff
+//  TODO Add LCD stuff
+//  TODO Add an "Not yet checked" button option when holding a button
 
 
-
-uint8_t system_state = STATE_INIT;
-
-uint8_t wifi_init_done = false;
-uint8_t lcd_init_done = false;
-
-
+//TODO Nice to haves when everything works
+//  TODO add fading in/out LED's when uploading to server
 
 
 void print_debug_messages();
