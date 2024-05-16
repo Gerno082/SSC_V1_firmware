@@ -1,8 +1,8 @@
-#ifndef __MC_LCD_TASK_H__
-#define __MC_LCD_TASK_H__
+#ifndef __MC_DISPLAY_TASK_H__
+#define __MC_DISPLAY_TASK_H__
 
-void lcd_task_init();
+void display_task_init();
 
-void lcd_task_periodic_execute();
+void display_task_periodic_execute();
 
-#endif  //__MC_LCD_TASK_H__
+#endif  //__MC_DISPLAY_TASK_H__

@@ -19,8 +19,9 @@ class mc_freertos{
         void init();
 
         static void control_task(void * paramter);
-        static void lcd_task(void * paramter);
-        static void serial_task(void * paramter);
+        static void display_task(void * paramter);
+        static void event_logger_task(void * paramter);
+        static void i2c_task(void * paramter);
         static void wifi_task(void * paramter);
 
 
@@ -30,8 +31,9 @@ class mc_freertos{
     private:
 
         TaskHandle_t control_task_handle = NULL;
-        TaskHandle_t lcd_task_handle = NULL;
-        TaskHandle_t serial_task_handle = NULL;
+        TaskHandle_t display_task_handle = NULL;
+        TaskHandle_t event_logger_task_handle = NULL;
+        TaskHandle_t i2c_task_handle = NULL;
         TaskHandle_t wifi_task_handle = NULL;
 };
 

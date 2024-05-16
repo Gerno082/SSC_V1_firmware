@@ -33,6 +33,7 @@ void control_task_periodic_execute(){
 
     switch(system_state){
 
+
         case STATE_INIT:
 
             //run this piece of code only once when entering this state
@@ -50,19 +51,35 @@ void control_task_periodic_execute(){
         break;
 
 
-        case STATE_WAITING_FOR_WIFI:
+        case STATE_WAITING_FOR_NETWORK:
 
             //run this piece of code only once when entering this state
             if(control_local_state != system_state){
 
                 #ifdef DEBUG_STATES
-                    Debug.println("Entering waiting for WiFi state");
+                    Debug.println("Entering waiting for Network state");
                 #endif
                 
                 control_local_state = system_state;
             }
 
 
+
+
+        break;
+
+
+        case STATE_NETWORK_CONNECTING:
+
+            //run this piece of code only once when entering this state
+            if(control_local_state != system_state){
+
+                #ifdef DEBUG_STATES
+                    Debug.println("Entering Network connecting state");
+                #endif
+                
+                control_local_state = system_state;
+            }
 
 
         break;
@@ -70,41 +87,58 @@ void control_task_periodic_execute(){
 
         case STATE_IDLE:
 
-            //run this piece of code only once when entering this state
-            if(control_local_state != system_state){
-
-                #ifdef DEBUG_STATES
-                    Debug.println("Entering idle state");
-                #endif
-                
-                control_local_state = system_state;
-            }
-
-
-
-
-        break;
-
-
-        case STATE_SURGERY_BUSY:
-
 
             //run this piece of code only once when entering this state
             if(control_local_state != system_state){
 
                 #ifdef DEBUG_STATES
-                    Debug.println("Entering surgery busy state");
+                    Debug.println("Entering Idle state");
                 #endif
                 
                 control_local_state = system_state;
             }
 
+        break;
 
 
+        case STATE_UPLOAD_DATA:
 
 
+            //run this piece of code only once when entering this state
+            if(control_local_state != system_state){
+
+                #ifdef DEBUG_STATES
+                    Debug.println("Entering Data Upload state");
+                #endif
+                
+                control_local_state = system_state;
+            }
 
         break;
+
+
+        case STATE_POWER_DOWN:
+
+
+            //run this piece of code only once when entering this state
+            if(control_local_state != system_state){
+
+                #ifdef DEBUG_STATES
+                    Debug.println("Entering Power Down state");
+                #endif
+                
+                control_local_state = system_state;
+            }
+
+        break;
+
+
+
+
+
+
+
+
 
     }
 

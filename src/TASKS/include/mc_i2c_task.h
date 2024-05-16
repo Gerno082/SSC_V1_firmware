@@ -1,8 +1,8 @@
-#ifndef __MC_CONTROL_TASK_H__
-#define __MC_CONTROL_TASK_H__
+#ifndef __MC_I2C_TASK_H__
+#define __MC_I2C_TASK_H__
 
-void control_task_init();
+void i2c_task_init();
 
-void control_task_periodic_execute();
+void i2c_task_periodic_execute();
 
-#endif  //__MC_HARDWARE_TASK_H__
+#endif  //__MC_I2C_TASK_H__

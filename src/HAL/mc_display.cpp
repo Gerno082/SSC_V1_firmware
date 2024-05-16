@@ -2,7 +2,7 @@
 
 
 //Local includes
-#include "HAL/include/mc_lcd.h"
+#include "HAL/include/mc_display.h"
 
 
 //External variables

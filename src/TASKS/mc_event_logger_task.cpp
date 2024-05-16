@@ -4,22 +4,25 @@
 #include <freertos/task.h>
 
 //Local includes
-#include "TASKS/include/mc_i2c_task.h"
+#include "TASKS/include/mc_event_logger_task.h"
 #include "types.h"
 #include "main.h"
 
 
 
 
+
+
 //Init function, only runs once
-void i2c_task_init(){
+void event_logger_task_init(){
 
 
 }
 
 
 //Periodic execute function, runs continuously
-void i2c_task_periodic_execute(){
+void event_logger_task_periodic_execute(){
+
 
 
 

@@ -3,7 +3,7 @@
 #include <freertos/task.h>
 
 //Local includes
-#include "TASKS/include/mc_lcd_task.h"
+#include "TASKS/include/mc_display_task.h"
 #include "types.h"
 
 
@@ -11,26 +11,26 @@
 extern uint8_t system_state;
 
 //Local variables
-uint8_t lcd_local_state = -1;
+uint8_t display_local_state = -1;
 
 
 //Init function, only runs once
-void lcd_task_init(){
+void display_task_init(){
 
 }
 
 
 //Periodic execute function, runs continuously
-void lcd_task_periodic_execute(){
+void display_task_periodic_execute(){
 
     switch(system_state){
 
         case STATE_INIT:
 
             //run this piece of code only once when entering this state
-            if(lcd_local_state != system_state){
+            if(display_local_state != system_state){
                 
-                lcd_local_state = system_state;
+                display_local_state = system_state;
             }
 
 
@@ -38,12 +38,12 @@ void lcd_task_periodic_execute(){
         break;
 
 
-        case STATE_WAITING_FOR_WIFI:
+        case STATE_WAITING_FOR_NETWORK:
 
             //run this piece of code only once when entering this state
-            if(lcd_local_state != system_state){
+            if(display_local_state != system_state){
                 
-                lcd_local_state = system_state;
+                display_local_state = system_state;
             }
 
 
@@ -55,9 +55,9 @@ void lcd_task_periodic_execute(){
         case STATE_IDLE:
 
             //run this piece of code only once when entering this state
-            if(lcd_local_state != system_state){
+            if(display_local_state != system_state){
                 
-                lcd_local_state = system_state;
+                display_local_state = system_state;
             }
 
 
@@ -70,9 +70,9 @@ void lcd_task_periodic_execute(){
 
 
             //run this piece of code only once when entering this state
-            if(lcd_local_state != system_state){
+            if(display_local_state != system_state){
                 
-                lcd_local_state = system_state;
+                display_local_state = system_state;
             }
 
 

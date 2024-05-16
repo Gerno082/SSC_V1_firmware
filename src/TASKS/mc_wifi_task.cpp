@@ -53,7 +53,7 @@ void wifi_task_periodic_execute(){
         break;
 
 
-        case STATE_WAITING_FOR_WIFI:
+        case STATE_WAITING_FOR_NETWORK:
 
             //run this piece of code only once when entering this state
             if(wifi_local_state != system_state){
