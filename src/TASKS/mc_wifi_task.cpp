@@ -23,112 +23,171 @@ void wifi_task_init(){
 }
 
 
+
+
+
+
+
 //Periodic execute function, runs continuously
 void wifi_task_periodic_execute(){
 
     unsigned long wifi_start_time;
 
     
-    switch(system_state){
+    // switch(system_state){
 
-        case STATE_INIT:
+    //     case STATE_INIT:
 
 
-            //run this piece of code only once when entering this state
-            if(wifi_local_state != system_state){
+    //         //run this piece of code only once when entering this state
+    //         if(wifi_local_state != system_state){
 
-                #ifdef DEBUG_WIFI
-                    Debug.println("WIFI Init");
-                #endif
+    //             #ifdef DEBUG_WIFI
+    //                 Debug.println("WIFI Init");
+    //             #endif
 
-                restart_wifi();
+    //             restart_wifi();
 
 
 
                 
-                wifi_local_state = system_state;
-            }
+    //             wifi_local_state = system_state;
+    //         }
 
 
-        break;
+    //     break;
 
 
-        case STATE_WAITING_FOR_NETWORK:
+    //     case STATE_WAITING_FOR_NETWORK:
 
-            //run this piece of code only once when entering this state
-            if(wifi_local_state != system_state){
+    //         //run this piece of code only once when entering this state
+    //         if(wifi_local_state != system_state){
 
-                //save the start time of the wifi connection
-                wifi_start_time = millis();
+    //             //save the start time of the wifi connection
+    //             wifi_start_time = millis();
                 
-                wifi_local_state = system_state;
-            }
+    //             wifi_local_state = system_state;
+    //         }
 
 
-            if(WiFi.status() == WL_CONNECTED){
+    //         if(WiFi.status() == WL_CONNECTED){
 
-                #ifdef DEBUG_WIFI
-                    Debug.println("WIFI connected");
-                #endif
+    //             #ifdef DEBUG_WIFI
+    //                 Debug.println("WIFI connected");
+    //             #endif
 
-                system_state = STATE_IDLE;
+    //             system_state = STATE_IDLE;
 
-                break;
-            }
+    //             break;
+    //         }
 
 
-            if(millis() - wifi_start_time > WIFI_START_CONNECTION_TIMEOUT){
+    //         if(millis() - wifi_start_time > WIFI_START_CONNECTION_TIMEOUT){
 
-                #ifdef DEBUG_WIFI
-                    Debug.println("WiFi connect timeout");
-                #endif
+    //             #ifdef DEBUG_WIFI
+    //                 Debug.println("WiFi connect timeout");
+    //             #endif
 
-                restart_wifi();
+    //             restart_wifi();
 
-                //save the start time of the wifi connection
-                wifi_start_time = millis();
+    //             //save the start time of the wifi connection
+    //             wifi_start_time = millis();
 
-            }
+    //         }
 
         
 
 
-        break;
+    //     break;
 
 
-        case STATE_IDLE:
 
-            //run this piece of code only once when entering this state
-            if(wifi_local_state != system_state){
+
+    //     case STATE_NETWORK_CONNECTING:
+
+    //         //run this piece of code only once when entering this state
+    //         if(wifi_local_state != system_state){
                 
-                wifi_local_state = system_state;
-            }
+    //             wifi_local_state = system_state;
+    //         }
 
-            check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
-
-
-        break;
+    //         check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
 
 
-        case STATE_SURGERY_BUSY:
+    //     break;
 
 
-            //run this piece of code only once when entering this state
-            if(wifi_local_state != system_state){
+
+
+    //     case STATE_IDLE:
+
+    //         //run this piece of code only once when entering this state
+    //         if(wifi_local_state != system_state){
                 
-                wifi_local_state = system_state;
-            }
+    //             wifi_local_state = system_state;
+    //         }
 
-            check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
+    //         check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
 
 
-        break;
+    //     break;
 
-    }
+
+    //     case STATE_SURGERY_BUSY:
+
+
+    //         //run this piece of code only once when entering this state
+    //         if(wifi_local_state != system_state){
+                
+    //             wifi_local_state = system_state;
+    //         }
+
+    //         check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
+
+
+    //     break;
+
+
+    //     case STATE_UPLOAD_DATA:
+
+
+    //         //run this piece of code only once when entering this state
+    //         if(wifi_local_state != system_state){
+                
+    //             wifi_local_state = system_state;
+    //         }
+
+    //         check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
+
+
+    //     break;
+
+
+    //     case STATE_POWER_DOWN:
+
+
+    //         //run this piece of code only once when entering this state
+    //         if(wifi_local_state != system_state){
+                
+    //             wifi_local_state = system_state;
+    //         }
+
+    //         check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
+
+
+    //     break;
+
+    // }
 
     vTaskDelay(20/portTICK_PERIOD_MS);
 
 }
+
+
+
+
+
+
 
 
 void restart_wifi(){

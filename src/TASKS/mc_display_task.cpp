@@ -6,6 +6,8 @@
 #include "TASKS/include/mc_display_task.h"
 #include "types.h"
 
+#include "HAL/include/mc_display.h"
+
 
 //External variables
 extern uint8_t system_state;
@@ -13,9 +15,15 @@ extern uint8_t system_state;
 //Local variables
 uint8_t display_local_state = -1;
 
+mc_display  display;
+
+
+
 
 //Init function, only runs once
 void display_task_init(){
+
+    display.init();
 
 }
 

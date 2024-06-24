@@ -38,9 +38,21 @@ void mc_led::init(){
   COL2_LED.begin();
   COL3_LED.begin();
 
+
+  set_start_LEDs();
+
   // update_all_leds(0, 0, LED_BRIGHTNESS);
 
-  update_all_leds(LED_BRIGHTNESS, 0, 0);
+  // update_all_leds(LED_BRIGHTNESS, 0, 0);
+
+  // delay(1000);
+
+
+  // update_all_leds(0, LED_BRIGHTNESS, 0);
+
+  // delay(1000);
+
+  // update_all_leds(0, 0, LED_BRIGHTNESS);
   
 }
 
@@ -62,7 +74,9 @@ void mc_led::update_all_leds(uint8_t red, uint8_t green, uint8_t blue){
 
 
 //Set the LED colour at a specific row and column
-void mc_led::set_LED_colour(uint8_t _row, uint8_t _col, uint8_t _red, uint8_t _green, uint8_t _blue){
+void mc_led::set_LED_colour(uint8_t _row_in, uint8_t _col, uint8_t _red, uint8_t _green, uint8_t _blue){
+
+  uint8_t _row = 21 - LED_V0_WS2811_position_map[_row_in];
 
   if(_col == LED_COL1){
 
@@ -80,5 +94,34 @@ void mc_led::set_LED_colour(uint8_t _row, uint8_t _col, uint8_t _red, uint8_t _g
     COL3_LED.show();
 
   }
+
+}
+
+
+
+
+
+
+void mc_led::set_start_LEDs(){
+  
+  for(int i = 0; i < 23; i++){
+
+    if(ITEMS[i].type == ITEM_TYPE_DUAL_STATE){
+      set_LED_colour(ITEMS[i].btn[0], ITEMS[i].column, 255, 0, 0);
+    }
+
+    if(ITEMS[i].type == ITEM_TYPE_TRI_STATE){
+      set_LED_colour(ITEMS[i].btn[0], ITEMS[i].column, 255, 0, 0);
+      set_LED_colour(ITEMS[i].btn[1], ITEMS[i].column, 255, 0, 0);
+    }
+
+    if(ITEMS[i].type == ITEM_TYPE_QUAD_STATE){
+      set_LED_colour(ITEMS[i].btn[0], ITEMS[i].column, 255, 0, 0);
+      set_LED_colour(ITEMS[i].btn[1], ITEMS[i].column, 255, 0, 0);
+      set_LED_colour(ITEMS[i].btn[2], ITEMS[i].column, 255, 0, 0);
+    }
+
+  }
+
 
 }

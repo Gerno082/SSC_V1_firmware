@@ -2,6 +2,10 @@
 #define __TYPES_H__
 
 
+
+
+
+
 enum mc_system_states{
   STATE_INIT = 0,
   STATE_WAITING_FOR_NETWORK = 1,

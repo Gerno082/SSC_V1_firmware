@@ -29,7 +29,17 @@ void mc_items::init(){
 
 
 
-void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
+void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
+
+
+
+    // Serial.print(" Col:");
+    // Serial.print(_column);
+    // Serial.print(" BTN:");
+    // Serial.print(button);
+    // Serial.print(" STATE:");
+    // Serial.println(_button_state);
+
 
     // check if buttons is enabled   
     //Only enter if the button is being pressed (not released)
@@ -37,8 +47,11 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
 
         button_block_timer = millis();
 
+
+
+
         //iterate through all the items in the struct
-        for(int item_num = 0; item_num < 24; item_num++){
+        for(int item_num = 0; item_num < 23; item_num++){
 
 
 
@@ -46,8 +59,11 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
             if(ITEMS[item_num].column == _column){
 
 
+                
+
+
                 //if this is a dual state button and the button was pressed
-                if(ITEMS[item_num].btn[0] == _row && ITEMS[item_num].type == ITEM_TYPE_DUAL_STATE){
+                if(ITEMS[item_num].btn[0] == button && ITEMS[item_num].type == ITEM_TYPE_DUAL_STATE){
 
                     if(ITEMS[item_num].state == UNCHECKED){
 
@@ -61,13 +77,13 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
                         #endif
 
                         //Update LED
-                        led.set_LED_colour(ITEMS[item_num].btn[0]-1, _column, 0, LED_BRIGHTNESS, 0);
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, 0, LED_BRIGHTNESS, 0);
 
                         //execute command
                         commands.run_command(ITEMS[item_num].command[0]);
 
                         //send to database
-                        database.send_db_command(item_strings[item_num], CHECKED_STRING);
+                        database.send_button_to_db(button_names[item_num], CHECKED_STRING);
 
                         //break from for loop
                         item_num = 24;
@@ -87,13 +103,13 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
                         #endif
 
                         //Update LED
-                        led.set_LED_colour(ITEMS[item_num].btn[0]-1, _column, LED_BRIGHTNESS, 0, 0);
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, LED_BRIGHTNESS, 0, 0);
 
                         //execute command
                         commands.run_command(ITEMS[item_num].command[0]);
 
                         //send to database
-                        database.send_db_command(item_strings[item_num], UNCHECKED_STRING);
+                        database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
 
                         //break from for loop
                         item_num = 24;
@@ -106,7 +122,7 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
 
 
                 //if this is a tri state item and the first button was pressed
-                if(ITEMS[item_num].btn[0] == _row && ITEMS[item_num].type == ITEM_TYPE_TRI_STATE){
+                if(ITEMS[item_num].btn[0] == button && ITEMS[item_num].type == ITEM_TYPE_TRI_STATE){
 
                     //if it is a Tri state item and if the state is YES, and the YES button was pressed, uncheck the item
                     if(ITEMS[item_num].state == CHECKED_YES){
@@ -121,14 +137,14 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
                         #endif
 
                         //Update LEDs
-                        led.set_LED_colour(ITEMS[item_num].btn[0]-1, _column, LED_BRIGHTNESS, 0, 0);    //YES LED
-                        led.set_LED_colour(ITEMS[item_num].btn[1]-1, _column, LED_BRIGHTNESS, 0, 0);    //NA LED
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, LED_BRIGHTNESS, 0, 0);    //YES LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
                                                 
                         //execute command
                         commands.run_command(ITEMS[item_num].command[0]);
 
                         //send to database
-                        database.send_db_command(item_strings[item_num], UNCHECKED_STRING);
+                        database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
 
                         //break from for loop
                         item_num = 24;
@@ -149,14 +165,14 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
                         #endif
 
                         //Update LEDs
-                        led.set_LED_colour(ITEMS[item_num].btn[0]-1, _column, 0, LED_BRIGHTNESS, 0);    //YES LED
-                        led.set_LED_colour(ITEMS[item_num].btn[1]-1, _column, 0, 0, 0);                 //NA LED
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, 0, LED_BRIGHTNESS, 0);    //YES LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, 0, 0, 0);                 //NA LED
                         
                         //execute command
                         commands.run_command(ITEMS[item_num].command[0]);
 
                         //send to database
-                        database.send_db_command(item_strings[item_num], CHECKED_YES_STRING);
+                        database.send_button_to_db(button_names[item_num], CHECKED_YES_STRING);
 
                         //break from for loop
                         item_num = 24;
@@ -168,7 +184,7 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
 
 
                 //if this is a tri state item and the second button was pressed
-                if(ITEMS[item_num].btn[1] == _row && ITEMS[item_num].type == ITEM_TYPE_TRI_STATE){
+                if(ITEMS[item_num].btn[1] == button && ITEMS[item_num].type == ITEM_TYPE_TRI_STATE){
 
 
                     //if it is a Tri state item and if the state is not N/A, and the N/A button was pressed, go to N/A
@@ -184,14 +200,14 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
                         #endif
 
                         //Update LEDs
-                        led.set_LED_colour(ITEMS[item_num].btn[0]-1, _column, LED_BRIGHTNESS, 0, 0);    //YES LED
-                        led.set_LED_colour(ITEMS[item_num].btn[1]-1, _column, LED_BRIGHTNESS, 0, 0);    //NA LED
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, LED_BRIGHTNESS, 0, 0);    //YES LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
 
                         //execute command
                         commands.run_command(ITEMS[item_num].command[1]);
 
                         //send to database
-                        database.send_db_command(item_strings[item_num], UNCHECKED_STRING);
+                        database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
                         
                         //break from for loop
                         item_num = 24;
@@ -213,14 +229,14 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
                         #endif
 
                         //Update LEDs
-                        led.set_LED_colour(ITEMS[item_num].btn[0]-1, _column, 0, 0, 0);                 //YES LED
-                        led.set_LED_colour(ITEMS[item_num].btn[1]-1, _column, 0, LED_BRIGHTNESS, 0);    //NA LED
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, 0, 0, 0);                 //YES LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, 0, LED_BRIGHTNESS, 0);    //NA LED
 
                         //execute command
                         commands.run_command(ITEMS[item_num].command[1]);
 
                         //send to database
-                        database.send_db_command(item_strings[item_num], CHECKED_NA_STRING);
+                        database.send_button_to_db(button_names[item_num], CHECKED_NA_STRING);
                         
                         //break from for loop
                         item_num = 24;
@@ -231,15 +247,230 @@ void mc_items::log_item(uint8_t _row, uint8_t _column, uint8_t _button_state){
                 }
 
 
+
+
+
+
+
+
+                //if this is a quad state item and the first button was pressed
+                if(ITEMS[item_num].btn[0] == button && ITEMS[item_num].type == ITEM_TYPE_QUAD_STATE){
+
+                    //if it is a Tri state item and if the state is L, and the L button was pressed, uncheck the item
+                    if(ITEMS[item_num].state == CHECKED_L){
+
+                        //change state
+                        ITEMS[item_num].state = UNCHECKED;
+
+                        #ifdef DEBUG_ITEMS
+                            Debug.print("Item ");
+                            Debug.print(item_num);
+                            Debug.println(" unchecked");
+                        #endif
+
+                        //Update LEDs
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, LED_BRIGHTNESS, 0, 0);    //L LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, LED_BRIGHTNESS, 0, 0);    //R LED
+                        led.set_LED_colour(ITEMS[item_num].btn[2], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
+                                                
+                        //execute command
+                        commands.run_command(ITEMS[item_num].command[0]);
+
+                        //send to database
+                        database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
+
+                        //break from for loop
+                        item_num = 24;
+                        break;
+
+                    }//ITEM == CHECKED_L
+
+                    //if it is a Quad state item and if the state is not L, and the L button was pressed, go to L
+                    if(ITEMS[item_num].state != CHECKED_L){
+
+                        //change state
+                        ITEMS[item_num].state = CHECKED_L;
+
+                        #ifdef DEBUG_ITEMS
+                            Debug.print("Item ");
+                            Debug.print(item_num);
+                            Debug.println(" L checked");
+                        #endif
+
+                        //Update LEDs
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, 0, LED_BRIGHTNESS, 0);    //L LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, 0, 0, 0);    //R LED
+                        led.set_LED_colour(ITEMS[item_num].btn[2], _column, 0, 0, 0);    //NA LED
+                        
+                        //execute command
+                        commands.run_command(ITEMS[item_num].command[0]);
+
+                        //send to database
+                        database.send_button_to_db(button_names[item_num], CHECKED_L_STRING);
+
+                        //break from for loop
+                        item_num = 24;
+                        break;
+
+                    }//ITEM != CHECKED_L
+                
+                }
+
+
+
+
+
+                //if this is a quad state item and the second button was pressed
+                if(ITEMS[item_num].btn[1] == button && ITEMS[item_num].type == ITEM_TYPE_QUAD_STATE){
+
+                    //if it is a Tri state item and if the state is R, and the R button was pressed, uncheck the item
+                    if(ITEMS[item_num].state == CHECKED_R){
+
+                        //change state
+                        ITEMS[item_num].state = UNCHECKED;
+
+                        #ifdef DEBUG_ITEMS
+                            Debug.print("Item ");
+                            Debug.print(item_num);
+                            Debug.println(" unchecked");
+                        #endif
+
+                        //Update LEDs
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, LED_BRIGHTNESS, 0, 0);    //L LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, LED_BRIGHTNESS, 0, 0);    //R LED
+                        led.set_LED_colour(ITEMS[item_num].btn[2], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
+                                                
+                        //execute command
+                        commands.run_command(ITEMS[item_num].command[0]);
+
+                        //send to database
+                        database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
+
+                        //break from for loop
+                        item_num = 24;
+                        break;
+
+                    }//ITEM == CHECKED_R
+
+                    //if it is a Quad state item and if the state is not R, and the R button was pressed, go to R
+                    if(ITEMS[item_num].state != CHECKED_R){
+
+                        //change state
+                        ITEMS[item_num].state = CHECKED_R;
+
+                        #ifdef DEBUG_ITEMS
+                            Debug.print("Item ");
+                            Debug.print(item_num);
+                            Debug.println(" R checked");
+                        #endif
+
+                        //Update LEDs
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, 0, 0, 0);    //L LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, 0, LED_BRIGHTNESS, 0);    //R LED
+                        led.set_LED_colour(ITEMS[item_num].btn[2], _column, 0, 0, 0);    //NA LED
+                        
+                        //execute command
+                        commands.run_command(ITEMS[item_num].command[0]);
+
+                        //send to database
+                        database.send_button_to_db(button_names[item_num], CHECKED_R_STRING);
+
+                        //break from for loop
+                        item_num = 24;
+                        break;
+
+                    }//ITEM != CHECKED_L
+                
+                }
+
+
+
+
+                
+                //if this is a quad state item and the third button was pressed
+                if(ITEMS[item_num].btn[2] == button && ITEMS[item_num].type == ITEM_TYPE_QUAD_STATE){
+
+
+                    //if it is a Quad state item and if the state is not N/A, and the N/A button was pressed, go to N/A
+                    if(ITEMS[item_num].state == CHECKED_NA){
+
+                        //change state
+                        ITEMS[item_num].state = UNCHECKED;
+
+                        #ifdef DEBUG_ITEMS
+                            Debug.print("Item ");
+                            Debug.print(item_num);
+                            Debug.println(" unchecked");
+                        #endif
+
+                        //Update LEDs
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, LED_BRIGHTNESS, 0, 0);    //L LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, LED_BRIGHTNESS, 0, 0);    //R LED
+                        led.set_LED_colour(ITEMS[item_num].btn[2], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
+
+                        //execute command
+                        commands.run_command(ITEMS[item_num].command[1]);
+
+                        //send to database
+                        database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
+                        
+                        //break from for loop
+                        item_num = 24;
+                        break;
+
+                    }//ITEM == CHECKED_NA
+
+
+                    //if it is a Quad state item and if the state is not N/A, and the N/A button was pressed, go to N/A
+                    if(ITEMS[item_num].state != CHECKED_NA){
+
+                        //change state
+                        ITEMS[item_num].state = CHECKED_NA;
+
+                        #ifdef DEBUG_ITEMS
+                            Debug.print("Item ");
+                            Debug.print(item_num);
+                            Debug.println(" N/A checked");
+                        #endif
+
+                        //Update LEDs
+                        led.set_LED_colour(ITEMS[item_num].btn[0], _column, 0, 0, 0);    //L LED
+                        led.set_LED_colour(ITEMS[item_num].btn[1], _column, 0, 0, 0);    //R LED
+                        led.set_LED_colour(ITEMS[item_num].btn[2], _column, 0, LED_BRIGHTNESS, 0);    //NA LED
+
+                        //execute command
+                        commands.run_command(ITEMS[item_num].command[1]);
+
+                        //send to database
+                        database.send_button_to_db(button_names[item_num], CHECKED_NA_STRING);
+                        
+                        //break from for loop
+                        item_num = 24;
+                        break;
+
+                    }//ITEM != CHECKED_NA
+
+                }
+
+
+
+
+
+
+
+
+
+
+
             }//ITEM_row == _row && ITEM_column == _column
 
 
 
-            //if we come across an item that is unchecked, do not look further and break from the loop
-            if(ITEMS[item_num].state == UNCHECKED){
-                item_num = 24;
-                return;
-            }
+            // //if we come across an item that is unchecked, do not look further and break from the loop
+            // if(ITEMS[item_num].state == UNCHECKED){
+            //     item_num = 24;
+            //     return;
+            // }
 
         
         

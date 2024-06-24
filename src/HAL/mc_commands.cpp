@@ -3,6 +3,7 @@
 
 //Local includes
 #include "HAL/include/mc_commands.h"
+#include "Arduino.h"
 
 //External variables
 
@@ -30,6 +31,8 @@ void mc_commands::run_command(uint8_t command){
 
 
         case STOP_SURGERY_COMMAND:
+
+            Serial.println("Stop Surgery");
         
         break;
 

@@ -5,13 +5,12 @@
 
 //Local includes
 #include "TASKS/include/mc_control_task.h"
-#include "HAL/include/mc_button.h"
 #include "types.h"
 #include "main.h"
 
 
 //External variables
-extern mc_button button;
+
 extern uint8_t system_state;
 
 //local variables
@@ -28,7 +27,7 @@ void control_task_init(){
 //Periodic execute function, runs continuously
 void control_task_periodic_execute(){
 
-    button.read_all_buttons(1);
+    // button.read_all_buttons(1);
 
 
     switch(system_state){

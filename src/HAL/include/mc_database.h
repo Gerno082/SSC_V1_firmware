@@ -15,6 +15,13 @@ class mc_database{
 
     void send_db_command(String, String);
 
+    void send_button_to_db(String, String);
+
+
+    String db_buffer[100];
+
+    uint16_t db_buf_pos = 0;
+
 
     private:
 
