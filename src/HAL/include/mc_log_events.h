@@ -10,7 +10,7 @@
 #include "HAL/include/mc_database.h"
 
 //external objects definition 
-extern mc_commands commands;
+extern mc_commands cmd;
 
 
 
@@ -68,6 +68,21 @@ class mc_items{
       ITEM_TYPE_QUAD_STATE = 2
     };
 
+
+    enum command_positions{
+      UNCHECKED_COMMAND = 0,
+
+      CHECKED_COMMAND = 1,
+      YES_CHECKED_COMMAND = 1,
+      L_CHECKED_COMMAND = 1,
+
+      R_CHECKED_COMMAND = 2,
+
+      NA_CHECKED_COMMAND = 3
+      
+    };
+
+
     typedef struct{
       uint8_t type;
       uint8_t column;
@@ -77,35 +92,47 @@ class mc_items{
     }  item_map_layer;
 
 
+    #define NB 0
+
+
+
+
+
+    //cmd
+    // - for Dual state:  {Unchecked command, Checked command, 0, 0}
+    // - for Tri state:   {Unchecked command, YES command, N/A command, 0}
+    // - for Quad state:  {Unchecked command, L command, R command, N/A command}
+
+
     item_map_layer ITEMS[23] = {
-      //Column 1 buttons (8 items)
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,    0        /*Buttons*/,   commands.NO_COMMAND},    //Identity
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,    2        /*Buttons*/,   commands.NO_COMMAND},    //Procedure
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,    4        /*Buttons*/,   commands.NO_COMMAND},    //site
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,    6        /*Buttons*/,   commands.NO_COMMAND},    //consent
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,    8        /*Buttons*/,   commands.NO_COMMAND},    //allergies
-      { ITEM_TYPE_QUAD_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {10,11,12}/*Buttons*/,   commands.NO_COMMAND},    //side checked
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {14,15}   /*Buttons*/,   commands.NO_COMMAND},    //site marked
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {20,21}   /*Buttons*/,   commands.NO_COMMAND},    //blood on standby, 7
+      //Column 1 buttons (8 items)                                                                                        //UNCHECKED         CHECKED/ YES(TRI)/ L(QUAD)    R(QUAD)             N/A(TRI/QUAD)          
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {0,NB,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.START_SURG_CMD,           cmd.NO_CMD,         cmd.NO_CMD}},    //Identity
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {2,NB,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Procedure
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {4,NB,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //site
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {6,NB,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //consent
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {8,NB,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //allergies
+      { ITEM_TYPE_QUAD_STATE  /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {10,11,12} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //side checked
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {14,15,NB} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //site marked
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    0  /*Column*/,    UNCHECKED  /*Item_state*/,   {20,21,NB} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //blood on standby, 7
 
       //Column 2 buttons (8 items)
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    0        /*Buttons*/,   commands.NO_COMMAND},    //Introduce team members
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    4        /*Buttons*/,   commands.NO_COMMAND},    //Patient identity
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    6        /*Buttons*/,   commands.NO_COMMAND},    //Procedure
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    8        /*Buttons*/,   commands.NO_COMMAND},    //Site
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    10       /*Buttons*/,   commands.NO_COMMAND},    //Sterility of instruments
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {12,13}  /*Buttons*/,   commands.NO_COMMAND},    //Confirm any implants
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {16,17}  /*Buttons*/,   commands.NO_COMMAND},    //anticipated critical events
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {20,21}  /*Buttons*/,   commands.NO_COMMAND},    //Antibiotic prophylaxis, 15
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {0,NB,NB} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Introduce team members
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {4,NB,NB} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Patient identity
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {6,NB,NB} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Procedure
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {8,NB,NB} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Site
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {10,NB,NB}/*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Sterility of instruments
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {12,13,NB}/*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Confirm any implants
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {16,17,NB}/*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //anticipated critical events
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {20,21,NB}/*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Antibiotic prophylaxis, 15
 
       //Column 3 buttons (7 items)
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    0        /*Buttons*/,   commands.NO_COMMAND},    //Surgeon confirm procedure name
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {4,5}    /*Buttons*/,   commands.NO_COMMAND},    //swabs
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {6,7}    /*Buttons*/,   commands.NO_COMMAND},    //sharps
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {8,9}    /*Buttons*/,   commands.NO_COMMAND},    //isntruments counted
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {12,13}  /*Buttons*/,   commands.NO_COMMAND},    //Specimen is labelled
-      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {16,17}  /*Buttons*/,   commands.NO_COMMAND},    //equipment issues reported
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    18       /*Buttons*/,   commands.NO_COMMAND}     //Log event button, 22
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {0,NB,NB} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Surgeon confirm procedure name
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {4,5,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //swabs
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {6,7,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //sharps
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {8,9,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //isntruments counted
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {12,13,NB}/*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Specimen is labelled
+      { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {16,17,NB}/*Buttons*/,   {cmd.NO_CMD,         cmd.STOP_SURG_CMD,            cmd.NO_CMD,         cmd.STOP_SURG_CMD}},//equipment issues reported
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {18,NB,NB}/*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}}     //Log event button, 22
     };
 
 

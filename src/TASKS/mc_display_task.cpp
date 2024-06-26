@@ -19,11 +19,13 @@ mc_display  display;
 
 
 
+bool display_init_done = false;
+
 
 //Init function, only runs once
-void display_task_init(){
+void display_task_init(SPIClass* spi_bus){
 
-    display.init();
+    display.init(spi_bus);
 
 }
 
@@ -41,6 +43,8 @@ void display_task_periodic_execute(){
                 display_local_state = system_state;
             }
 
+            display_init_done = true;
+
 
 
         break;
@@ -50,6 +54,8 @@ void display_task_periodic_execute(){
 
             //run this piece of code only once when entering this state
             if(display_local_state != system_state){
+
+                display.connecting_screen();
                 
                 display_local_state = system_state;
             }
@@ -64,6 +70,8 @@ void display_task_periodic_execute(){
 
             //run this piece of code only once when entering this state
             if(display_local_state != system_state){
+
+                display.idle_screen();
                 
                 display_local_state = system_state;
             }
@@ -79,6 +87,8 @@ void display_task_periodic_execute(){
 
             //run this piece of code only once when entering this state
             if(display_local_state != system_state){
+
+                display.surgery_screen();
                 
                 display_local_state = system_state;
             }

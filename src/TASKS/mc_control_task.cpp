@@ -2,9 +2,11 @@
 #include <Arduino.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
+#include <SPI.h>
 
 //Local includes
 #include "TASKS/include/mc_control_task.h"
+#include "HAL/include/mc_sd.h"
 #include "types.h"
 #include "main.h"
 
@@ -16,12 +18,22 @@ extern uint8_t system_state;
 //local variables
 uint8_t control_local_state = -1;
 
+mc_sd sd;
+
 
 //Init function, only runs once
-void control_task_init(){
+void control_task_init(SPIClass* spi_bus){
+
+    sd.init(spi_bus);
 
 
 }
+
+
+
+extern bool wifi_init_done;
+extern bool i2c_init_done;
+extern bool display_init_done;
 
 
 //Periodic execute function, runs continuously
@@ -43,6 +55,10 @@ void control_task_periodic_execute(){
                 #endif
                 
                 control_local_state = system_state;
+            }
+
+            if(wifi_init_done==true && i2c_init_done==true && display_init_done==true){
+                system_state = STATE_WAITING_FOR_NETWORK;
             }
 
 

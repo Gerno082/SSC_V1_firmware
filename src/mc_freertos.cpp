@@ -1,4 +1,5 @@
 //Platform includes
+#include <SPI.h>
 
 //Local includes
 #include "mc_freertos.h"
@@ -13,6 +14,9 @@
 
 
 //local variables
+
+
+SPIClass hspi(HSPI);
 
 
 //freertos constructor
@@ -31,8 +35,13 @@ mc_freertos::~mc_freertos(){
 //Start the freertos tasks
 void mc_freertos::init(){
 
+    hspi.begin(/*SCK*/14, /*MISO*/12, /*MOSI*/13, /*SS*/26);
+
+
+
     //Create the tasks
     xTaskCreatePinnedToCore(control_task,       "control_task",         15000/*stack depth*/, NULL/*parameters*/, 5/*priority*/, &control_task_handle,      0/*Core ID*/);
+    delay(1000);
     xTaskCreatePinnedToCore(display_task,       "display_task",         15000/*stack depth*/, NULL/*parameters*/, 3/*priority*/, &display_task_handle,      0/*Core ID*/);
     xTaskCreatePinnedToCore(event_logger_task,  "event_logger_task",    15000/*stack depth*/, NULL/*parameters*/, 2/*priority*/, &event_logger_task_handle, 0/*Core ID*/);
     xTaskCreatePinnedToCore(i2c_task,           "i2c_task",             15000/*stack depth*/, NULL/*parameters*/, 4/*priority*/, &i2c_task_handle,          1/*Core ID*/);
@@ -47,7 +56,7 @@ void mc_freertos::init(){
 void mc_freertos::control_task(void * paramter){
 
     //task init
-    control_task_init();
+    control_task_init(&hspi);
 
     //task periodic execute
     while(1){
@@ -63,9 +72,9 @@ void mc_freertos::control_task(void * paramter){
 // ---------------- LCD Task ---------------- //
 ////////////////////////////////////////////////
 void mc_freertos::display_task(void * parameter){
-    
+
     //task init
-    display_task_init();
+    display_task_init(&hspi);
 
     //task periodic execute
     while(1){

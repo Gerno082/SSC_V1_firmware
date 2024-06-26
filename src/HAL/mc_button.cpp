@@ -38,7 +38,6 @@ void mc_button::init(){
 
 
 
-
   //Init port expanders
   BTN0_PEX_COL0.begin();
   BTN0_PEX_COL1.begin();
@@ -47,18 +46,18 @@ void mc_button::init(){
   BTN0_PEX_COL1.pinMode16(0xFFFF);
 
 
-  // BTN1_PEX_COL0.begin();
-  // BTN1_PEX_COL1.begin();
-  //Set all pins to input
-  // BTN1_PEX_COL0.pinMode16(0xFFFF);
-  // BTN1_PEX_COL1.pinMode16(0xFFFF);
+  BTN1_PEX_COL0.begin();
+  BTN1_PEX_COL1.begin();
+  // Set all pins to input
+  BTN1_PEX_COL0.pinMode16(0xFFFF);
+  BTN1_PEX_COL1.pinMode16(0xFFFF);
 
 
-  // BTN2_PEX_COL0.begin();
-  // BTN2_PEX_COL1.begin();
-  //Set all pins to input
-  // BTN2_PEX_COL0.pinMode16(0xFFFF);
-  // BTN2_PEX_COL1.pinMode16(0xFFFF);
+  BTN2_PEX_COL0.begin();
+  BTN2_PEX_COL1.begin();
+  // Set all pins to input
+  BTN2_PEX_COL0.pinMode16(0xFFFF);
+  BTN2_PEX_COL1.pinMode16(0xFFFF);
 
 
   BTN_PEX_MENU.begin();

@@ -18,6 +18,9 @@ class mc_freertos{
 
         void init();
 
+
+        
+
         static void control_task(void * paramter);
         static void display_task(void * paramter);
         static void event_logger_task(void * paramter);

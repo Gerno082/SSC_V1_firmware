@@ -80,8 +80,8 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[0], _column, 0, LED_BRIGHTNESS, 0);
 
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[0]);
-
+                        cmd.run_command(ITEMS[item_num].command[CHECKED_COMMAND]);
+   
                         //send to database
                         database.send_button_to_db(button_names[item_num], CHECKED_STRING);
 
@@ -106,7 +106,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[0], _column, LED_BRIGHTNESS, 0, 0);
 
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[0]);
+                        cmd.run_command(ITEMS[item_num].command[UNCHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
@@ -141,7 +141,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[1], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
                                                 
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[0]);
+                        cmd.run_command(ITEMS[item_num].command[UNCHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
@@ -169,7 +169,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[1], _column, 0, 0, 0);                 //NA LED
                         
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[0]);
+                        cmd.run_command(ITEMS[item_num].command[YES_CHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], CHECKED_YES_STRING);
@@ -204,7 +204,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[1], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
 
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[1]);
+                        cmd.run_command(ITEMS[item_num].command[UNCHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
@@ -233,7 +233,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[1], _column, 0, LED_BRIGHTNESS, 0);    //NA LED
 
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[1]);
+                        cmd.run_command(ITEMS[item_num].command[NA_CHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], CHECKED_NA_STRING);
@@ -274,7 +274,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[2], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
                                                 
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[0]);
+                        cmd.run_command(ITEMS[item_num].command[UNCHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
@@ -303,7 +303,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[2], _column, 0, 0, 0);    //NA LED
                         
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[0]);
+                        cmd.run_command(ITEMS[item_num].command[L_CHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], CHECKED_L_STRING);
@@ -341,7 +341,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[2], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
                                                 
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[0]);
+                        cmd.run_command(ITEMS[item_num].command[UNCHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
@@ -370,7 +370,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[2], _column, 0, 0, 0);    //NA LED
                         
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[0]);
+                        cmd.run_command(ITEMS[item_num].command[R_CHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], CHECKED_R_STRING);
@@ -409,7 +409,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[2], _column, LED_BRIGHTNESS, 0, 0);    //NA LED
 
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[1]);
+                        cmd.run_command(ITEMS[item_num].command[UNCHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], UNCHECKED_STRING);
@@ -439,7 +439,7 @@ void mc_items::log_item(uint8_t button, uint8_t _column, uint8_t _button_state){
                         led.set_LED_colour(ITEMS[item_num].btn[2], _column, 0, LED_BRIGHTNESS, 0);    //NA LED
 
                         //execute command
-                        commands.run_command(ITEMS[item_num].command[1]);
+                        cmd.run_command(ITEMS[item_num].command[NA_CHECKED_COMMAND]);
 
                         //send to database
                         database.send_button_to_db(button_names[item_num], CHECKED_NA_STRING);

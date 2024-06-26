@@ -23,6 +23,8 @@
 
 
 
+bool i2c_init_done = false;
+
 
 
 mc_button button = mc_button(SDA_pin, SCL_pin);
@@ -67,6 +69,8 @@ void i2c_task_init(){
     //check int
     pinMode(23, INPUT);
     // attachInterrupt(23, check_btn_irq, FALLING);  //  todo verify
+
+    i2c_init_done = true;
 
 }
 

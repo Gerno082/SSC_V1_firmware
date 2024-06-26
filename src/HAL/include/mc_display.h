@@ -3,7 +3,7 @@
 
 
 #include <GxEPD2_BW.h>
-#include <Fonts/FreeMonoBold9pt7b.h>
+#include <Fonts/FreeMonoBold24pt7b.h>
 
 
 
@@ -16,9 +16,13 @@ class mc_display{
 
     ~mc_display();
 
-    void init();
+    void init(SPIClass* spi_bus);
 
+    void connecting_screen();
 
+    void idle_screen();
+
+    void surgery_screen();
 
 
 };

@@ -4,6 +4,7 @@
 //Local includes
 #include "HAL/include/mc_display.h"
 #include <Arduino.h>
+#include <SPI.h>
 
 
 //External variables
@@ -11,7 +12,7 @@
 
 GxEPD2_BW<GxEPD2_420_GDEY042T81, GxEPD2_420_GDEY042T81::HEIGHT> edisplay(GxEPD2_420_GDEY042T81(/*CS=5*/ 26, /*DC=*/ 25, /*RST=*/ 33, /*BUSY=*/ 32)); //GDEY042T81, 400x300, SSD1683 (no inking)
 
-SPIClass hspi(HSPI);
+
 
 
 
@@ -30,11 +31,15 @@ mc_display::~mc_display(){
 }
 
 
-void mc_display::init(){
 
 
-  hspi.begin(/*SCK*/14, /*MISO*/12, /*MOSI*/13, /*SS*/26);
-  edisplay.epd2.selectSPI(hspi, SPISettings(4000000, MSBFIRST, SPI_MODE0));
+
+
+void mc_display::init(SPIClass* spi_bus){
+
+  
+  
+  edisplay.epd2.selectSPI(*spi_bus, SPISettings(4000000, MSBFIRST, SPI_MODE0));
 
   edisplay.init(115200, true, 2, false); // USE THIS for Waveshare boards with "clever" reset circuit, 2ms reset pulse
   
@@ -42,7 +47,7 @@ void mc_display::init(){
 
   //init screen
   edisplay.setRotation(0);
-  edisplay.setFont(&FreeMonoBold9pt7b);
+  edisplay.setFont(&FreeMonoBold24pt7b);
   // if (display.epd2.WIDTH < 104) display.setFont(0);
   edisplay.setTextColor(GxEPD_BLACK);
   // int16_t tbx, tby; uint16_t tbw, tbh;
@@ -62,11 +67,11 @@ void mc_display::init(){
   {
     edisplay.fillScreen(GxEPD_WHITE);
     
-    edisplay.setCursor(140, 150);
-    edisplay.print("Boot screen");
+    edisplay.setCursor(50, 150);
+    edisplay.print("Boot");
 
-    edisplay.setCursor(60, 200);
-    edisplay.print("Mediclinic logo goes here");
+    edisplay.setCursor(10, 200);
+    edisplay.print("Mediclinic");
   }
   while (edisplay.nextPage());
 
@@ -74,5 +79,62 @@ void mc_display::init(){
 
 }
 
+
+
+
+void mc_display::connecting_screen(){
+
+
+  do
+  {
+    edisplay.fillScreen(GxEPD_WHITE);
+    
+    edisplay.setCursor(10, 100);
+    edisplay.print("Connecting");
+
+    edisplay.setCursor(10, 180);
+    edisplay.print("to Wifi");
+  }
+  while (edisplay.nextPage());
+
+
+}
+
+
+
+
+
+void mc_display::idle_screen(){
+
+
+  do
+  {
+    edisplay.fillScreen(GxEPD_WHITE);
+    
+    edisplay.setCursor(10, 100);
+    edisplay.print("IDLE State");
+  }
+  while (edisplay.nextPage());
+
+
+
+}
+
+
+void mc_display::surgery_screen(){
+
+
+  do
+  {
+    edisplay.fillScreen(GxEPD_WHITE);
+    
+    edisplay.setCursor(10, 100);
+    edisplay.print("Surgery");
+  }
+  while (edisplay.nextPage());
+
+
+
+}
 
 //local variables
