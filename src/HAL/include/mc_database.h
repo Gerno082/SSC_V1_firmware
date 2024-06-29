@@ -13,7 +13,7 @@ class mc_database{
 
     ~mc_database();
 
-    void send_db_command(String, String);
+    void send_db_command();
 
     void send_button_to_db(String, String);
 

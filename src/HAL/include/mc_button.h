@@ -72,6 +72,9 @@ class mc_button{
     // void read_all_buttons(uint32_t);
     // void button_press_callback(uint8_t _row, uint8_t _column, uint8_t _button_state);
 
+    //Define objects
+    mc_items items;
+
 
 
   private:
@@ -96,8 +99,7 @@ class mc_button{
 
 
 
-    //Define objects
-    mc_items items;
+
     
     //states of individual buttons
     enum button_press_states{     ////////////////////////////////////////This should be changed, BUTTON_PRESSED and BUTTON_RELEASED is also defined in button.h

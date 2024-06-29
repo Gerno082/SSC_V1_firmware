@@ -32,7 +32,7 @@ class mc_items{
 
     
 
-    mc_database database;
+    // mc_database database;
 
 
     enum item_states{
@@ -126,7 +126,7 @@ class mc_items{
       { ITEM_TYPE_TRI_STATE   /*Item type*/,    1  /*Column*/,    UNCHECKED  /*Item_state*/,    {20,21,NB}/*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Antibiotic prophylaxis, 15
 
       //Column 3 buttons (7 items)
-      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {0,NB,NB} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Surgeon confirm procedure name
+      { ITEM_TYPE_DUAL_STATE  /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {2/*0*/,NB,NB} /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //Surgeon confirm procedure name
       { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {4,5,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //swabs
       { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {6,7,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //sharps
       { ITEM_TYPE_TRI_STATE   /*Item type*/,    2  /*Column*/,    UNCHECKED  /*Item_state*/,    {8,9,NB}  /*Buttons*/,   {cmd.NO_CMD,         cmd.NO_CMD,                   cmd.NO_CMD,         cmd.NO_CMD}},    //isntruments counted

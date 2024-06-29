@@ -1,7 +1,7 @@
 #ifndef __MC_WIFI_TASK_H__
 #define __MC_WIFI_TASK_H__
 
-#define DEFAULT_SSID        "JH12"
+#define DEFAULT_SSID        "JH12-2"
 #define DEFAULT_PASSWORD    "#Merida124501"
 
 #define WIFI_CONNECTION_CHECK_RATE      3000   //in milliseconds, Check the WiFi connection every at this interval

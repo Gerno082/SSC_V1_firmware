@@ -17,4 +17,12 @@ enum mc_system_states{
 };
 
 
+#define QUEUE_ELEMENT_SIZE  50
+#define QUEUE_STRING_LENGTH  100
+typedef struct {
+  char string[QUEUE_STRING_LENGTH];
+} message_t;
+
+
+
 #endif

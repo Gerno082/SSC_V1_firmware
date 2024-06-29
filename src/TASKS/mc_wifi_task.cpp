@@ -36,6 +36,9 @@ void wifi_task_periodic_execute(){
 
     unsigned long wifi_start_time;
 
+
+    // Serial.println("WIFI");
+
     
     switch(system_state){
 
@@ -49,7 +52,7 @@ void wifi_task_periodic_execute(){
                     Debug.println("WIFI Init");
                 #endif
 
-                // restart_wifi();
+                restart_wifi();
 
 
 
@@ -76,30 +79,30 @@ void wifi_task_periodic_execute(){
             }
 
 
-            // if(WiFi.status() == WL_CONNECTED){
+            if(WiFi.status() == WL_CONNECTED){
 
-            //     #ifdef DEBUG_WIFI
-            //         Debug.println("WIFI connected");
-            //     #endif
+                #ifdef DEBUG_WIFI
+                    Debug.println("WIFI connected");
+                #endif
 
                 system_state = STATE_IDLE;
 
-            //     break;
-            // }
+                break;
+            }
 
 
-            // if(millis() - wifi_start_time > WIFI_START_CONNECTION_TIMEOUT){
+            if(millis() - wifi_start_time > WIFI_START_CONNECTION_TIMEOUT){
 
-            //     #ifdef DEBUG_WIFI
-            //         Debug.println("WiFi connect timeout");
-            //     #endif
+                #ifdef DEBUG_WIFI
+                    Debug.println("WiFi connect timeout");
+                #endif
 
-            //     restart_wifi();
+                restart_wifi();
 
-            //     //save the start time of the wifi connection
-            //     wifi_start_time = millis();
+                //save the start time of the wifi connection
+                wifi_start_time = millis();
 
-            // }
+            }
 
         
 
@@ -117,7 +120,7 @@ void wifi_task_periodic_execute(){
                 wifi_local_state = system_state;
             }
 
-            // check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
+            check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
 
 
         break;
@@ -133,7 +136,7 @@ void wifi_task_periodic_execute(){
                 wifi_local_state = system_state;
             }
 
-            // check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
+            check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
 
 
         break;
@@ -148,7 +151,7 @@ void wifi_task_periodic_execute(){
                 wifi_local_state = system_state;
             }
 
-            // check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
+            check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
 
 
         break;
@@ -163,7 +166,7 @@ void wifi_task_periodic_execute(){
                 wifi_local_state = system_state;
             }
 
-            // check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
+            check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
 
 
         break;
@@ -178,14 +181,14 @@ void wifi_task_periodic_execute(){
                 wifi_local_state = system_state;
             }
 
-            // check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
+            check_wifi_connection(WIFI_CONNECTION_CHECK_RATE);
 
 
         break;
 
     }
 
-    vTaskDelay(20/portTICK_PERIOD_MS);
+    vTaskDelay(50/portTICK_PERIOD_MS);
 
 }
 
@@ -242,7 +245,7 @@ void check_wifi_connection(unsigned long check_time){
     if(millis() - last_check_time > check_time){
 
         #ifdef DEBUG_WIFI 
-            Debug.println("Checking WiFi connection");
+            // Debug.println("Checking WiFi connection");
         #endif
 
 

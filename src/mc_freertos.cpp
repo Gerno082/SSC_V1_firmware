@@ -10,10 +10,26 @@
 #include "TASKS/include/mc_wifi_task.h"
 
 
+#include "types.h"
+
+
 //External variables
 
 
 //local variables
+
+
+
+
+#define MAX_STRING_LENGTH   100
+
+
+// Define Queue handle
+QueueHandle_t QueueHandle;
+
+
+
+
 
 
 SPIClass hspi(HSPI);
@@ -39,13 +55,33 @@ void mc_freertos::init(){
 
 
 
+    // Create the queue which will have <QueueElementSize> number of elements, each of size `message_t` and pass the address to <QueueHandle>.
+    QueueHandle = xQueueCreate(QUEUE_ELEMENT_SIZE, sizeof(message_t));
+
+    // Check if the queue was successfully created
+    if (QueueHandle == NULL) {
+        Serial.println("Queue could not be created. Halt.");
+        while (1) {
+            delay(1000);  // Halt at this point as is not possible to continue
+        }
+    }
+
+
+
     //Create the tasks
-    xTaskCreatePinnedToCore(control_task,       "control_task",         15000/*stack depth*/, NULL/*parameters*/, 5/*priority*/, &control_task_handle,      0/*Core ID*/);
-    delay(1000);
-    xTaskCreatePinnedToCore(display_task,       "display_task",         15000/*stack depth*/, NULL/*parameters*/, 3/*priority*/, &display_task_handle,      0/*Core ID*/);
-    xTaskCreatePinnedToCore(event_logger_task,  "event_logger_task",    15000/*stack depth*/, NULL/*parameters*/, 2/*priority*/, &event_logger_task_handle, 0/*Core ID*/);
-    xTaskCreatePinnedToCore(i2c_task,           "i2c_task",             15000/*stack depth*/, NULL/*parameters*/, 4/*priority*/, &i2c_task_handle,          1/*Core ID*/);
-    xTaskCreatePinnedToCore(wifi_task,          "wifi_task",            15000/*stack depth*/, NULL/*parameters*/, 4/*priority*/, &wifi_task_handle,         1/*Core ID*/);
+
+    
+
+    xTaskCreatePinnedToCore(wifi_task,          "wifi_task",            10000/*stack depth*/, NULL/*parameters*/, 4/*priority*/, &wifi_task_handle,         1/*Core ID*/);
+    xTaskCreatePinnedToCore(control_task,       "control_task",         10000/*stack depth*/, NULL/*parameters*/, 2/*priority*/, &control_task_handle,      0/*Core ID*/);
+    xTaskCreatePinnedToCore(i2c_task,           "i2c_task",             10000/*stack depth*/, NULL/*parameters*/, 3/*priority*/, &i2c_task_handle,          1/*Core ID*/);
+    xTaskCreatePinnedToCore(display_task,       "display_task",         10000/*stack depth*/, NULL/*parameters*/, 1/*priority*/, &display_task_handle,      0/*Core ID*/);
+    
+
+    
+    // xTaskCreatePinnedToCore(event_logger_task,  "event_logger_task",    50000/*stack depth*/, NULL/*parameters*/, 2/*priority*/, &event_logger_task_handle, 1/*Core ID*/);
+
+ 
 
 }
 
@@ -55,6 +91,8 @@ void mc_freertos::init(){
 /////////////////////////////////////////////////
 void mc_freertos::control_task(void * paramter){
 
+    vTaskDelay(20/portTICK_PERIOD_MS);
+
     //task init
     control_task_init(&hspi);
 
@@ -63,6 +101,11 @@ void mc_freertos::control_task(void * paramter){
 
         control_task_periodic_execute();
 
+
+        
+        // Serial.println("Control running");
+        // vTaskDelay(10/portTICK_PERIOD_MS);
+        
     }
 
 }
@@ -73,6 +116,8 @@ void mc_freertos::control_task(void * paramter){
 ////////////////////////////////////////////////
 void mc_freertos::display_task(void * parameter){
 
+    vTaskDelay(20/portTICK_PERIOD_MS);
+
     //task init
     display_task_init(&hspi);
 
@@ -80,6 +125,10 @@ void mc_freertos::display_task(void * parameter){
     while(1){
 
         display_task_periodic_execute();
+
+        
+        // Serial.println("Display running");
+        // vTaskDelay(10/portTICK_PERIOD_MS);
 
     }
 }
@@ -90,6 +139,8 @@ void mc_freertos::display_task(void * parameter){
 /////////////////////////////////////////////////
 void mc_freertos::event_logger_task(void * parameter){
 
+    vTaskDelay(20/portTICK_PERIOD_MS);
+
     //task init
     event_logger_task_init();
 
@@ -97,6 +148,10 @@ void mc_freertos::event_logger_task(void * parameter){
     while(1){
 
         event_logger_task_periodic_execute();
+
+        
+        // Serial.println("events running");
+        // vTaskDelay(10/portTICK_PERIOD_MS);
 
     }
 }
@@ -108,6 +163,10 @@ void mc_freertos::event_logger_task(void * parameter){
 /////////////////////////////////////////////////
 void mc_freertos::i2c_task(void * parameter){
 
+    vTaskDelay(20/portTICK_PERIOD_MS);
+
+    // Serial.println("Testing123");
+
     //task init
     i2c_task_init();
 
@@ -115,6 +174,9 @@ void mc_freertos::i2c_task(void * parameter){
     while(1){
 
         i2c_task_periodic_execute();
+        // Serial.println("i2c running");
+        // vTaskDelay(10/portTICK_PERIOD_MS);
+        
 
     }
 }
@@ -127,13 +189,23 @@ void mc_freertos::i2c_task(void * parameter){
 /////////////////////////////////////////////////
 void mc_freertos::wifi_task(void * parameter){
 
+    vTaskDelay(20/portTICK_PERIOD_MS);
+
     //task init
     wifi_task_init();
+
+    Serial.println("Test1");
 
     //task periodic execute
     while(1){
 
+
+        // Serial.println("Run");
+
         wifi_task_periodic_execute();
+
+        // vTaskDelay(10/portTICK_PERIOD_MS);
+        // Serial.println("wifi running");
 
     }
 }

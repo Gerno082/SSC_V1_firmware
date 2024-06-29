@@ -17,15 +17,19 @@ uint8_t display_local_state = -1;
 
 mc_display  display;
 
+SPIClass* display_spi_bus;
+
 
 
 bool display_init_done = false;
+
+extern bool sd_init_done;
 
 
 //Init function, only runs once
 void display_task_init(SPIClass* spi_bus){
 
-    display.init(spi_bus);
+    display_spi_bus = spi_bus;
 
 }
 
@@ -39,11 +43,22 @@ void display_task_periodic_execute(){
 
             //run this piece of code only once when entering this state
             if(display_local_state != system_state){
-                
+
                 display_local_state = system_state;
+
+                Serial.println("Display Init State");
+                
             }
 
-            display_init_done = true;
+
+            //if the display has not been initialized
+            if(display_init_done == false && sd_init_done == true){
+                
+
+                display.init(display_spi_bus);
+                display_init_done=true;
+                
+            }
 
 
 
@@ -55,9 +70,13 @@ void display_task_periodic_execute(){
             //run this piece of code only once when entering this state
             if(display_local_state != system_state){
 
+                display_local_state = system_state;
+
+                Serial.println("Display Connecting State");
+
                 display.connecting_screen();
                 
-                display_local_state = system_state;
+                
             }
 
 
@@ -71,11 +90,15 @@ void display_task_periodic_execute(){
             //run this piece of code only once when entering this state
             if(display_local_state != system_state){
 
+                display_local_state = system_state;
+
+                Serial.println("Display Idle State");
+
                 display.idle_screen();
                 
-                display_local_state = system_state;
-            }
+                
 
+            }
 
 
 
@@ -88,14 +111,32 @@ void display_task_periodic_execute(){
             //run this piece of code only once when entering this state
             if(display_local_state != system_state){
 
+                display_local_state = system_state;
+
+                Serial.println("Display Busy State");
+
                 display.surgery_screen();
                 
-                display_local_state = system_state;
+                
             }
 
 
+        break;
 
 
+        case STATE_UPLOAD_DATA:
+
+            //run this piece of code only once when entering this state
+            if(display_local_state != system_state){
+
+                display_local_state = system_state;
+
+                Serial.println("Display Upload State");
+
+                display.upload_screen();
+                
+                
+            }
 
 
         break;
@@ -103,7 +144,6 @@ void display_task_periodic_execute(){
     }
 
 
-
-    vTaskDelay(20/portTICK_PERIOD_MS);
+    vTaskDelay(5/portTICK_PERIOD_MS);
 
 }

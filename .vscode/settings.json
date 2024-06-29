@@ -6,7 +6,8 @@
         "istream": "cpp",
         "ostream": "cpp",
         "sstream": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "system_error": "cpp"
     },
     "cmake.configureOnOpen": false
 }

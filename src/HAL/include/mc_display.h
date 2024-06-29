@@ -24,6 +24,8 @@ class mc_display{
 
     void surgery_screen();
 
+    void upload_screen();
+
 
 };
 

@@ -39,7 +39,9 @@ void mc_led::init(){
   COL3_LED.begin();
 
 
-  set_start_LEDs();
+  // set_start_LEDs();
+
+  update_all_leds(255, 0, 0);
 
   // update_all_leds(0, 0, LED_BRIGHTNESS);
 
@@ -103,6 +105,9 @@ void mc_led::set_LED_colour(uint8_t _row_in, uint8_t _col, uint8_t _red, uint8_t
 
 
 void mc_led::set_start_LEDs(){
+
+
+
   
   for(int i = 0; i < 23; i++){
 

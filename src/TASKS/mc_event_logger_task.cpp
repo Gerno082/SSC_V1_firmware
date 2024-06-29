@@ -26,6 +26,6 @@ void event_logger_task_periodic_execute(){
 
 
 
-    vTaskDelay(1/portTICK_PERIOD_MS);
+    vTaskDelay(30/portTICK_PERIOD_MS);
 
 }

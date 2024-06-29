@@ -30,6 +30,11 @@ bool i2c_init_done = false;
 mc_button button = mc_button(SDA_pin, SCL_pin);
 
 
+extern mc_database database;
+
+
+uint16_t last_system_state;
+extern uint8_t system_state;
 
 
 
@@ -57,7 +62,7 @@ void i2c_task_init(){
     Serial.begin(115200);
 
 
-
+    // Serial.println("1");
 
     button.init();
 
@@ -78,8 +83,25 @@ void i2c_task_init(){
 //Periodic execute function, runs continuously
 void i2c_task_periodic_execute(){
 
+    // Serial.println("2");
+
 
     button.get_button_pressed();
+
+    // Serial.println("3");
+
+
+    if(last_system_state != system_state){
+
+        database.send_db_command();
+
+        last_system_state = system_state;
+    }
+
+    // Serial.println("4");
+
+
+    
 
 
 

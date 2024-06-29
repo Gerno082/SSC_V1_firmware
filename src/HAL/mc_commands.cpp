@@ -6,7 +6,11 @@
 #include "Arduino.h"
 #include "types.h"
 
+#include "HAL/include/mc_led.h"
+
 //External variables
+
+extern mc_led      led;
 
 
 //local variables
@@ -22,7 +26,10 @@ mc_commands::~mc_commands(){
 }
 
 
+
 extern uint8_t system_state;
+
+
 
 void mc_commands::run_command(uint8_t command){
 
@@ -35,9 +42,12 @@ void mc_commands::run_command(uint8_t command){
 
             if(system_state == STATE_IDLE){
 
-                
-
                 system_state = STATE_SURGERY_BUSY;
+
+
+
+                Serial.print("State: ");
+                Serial.println(system_state);
 
             }
 
@@ -55,7 +65,13 @@ void mc_commands::run_command(uint8_t command){
 
                 
 
-                system_state = STATE_IDLE;
+                system_state = STATE_UPLOAD_DATA;
+
+                led.update_all_leds(255, 0, 0);
+
+                
+                Serial.print("State: ");
+                Serial.println(system_state);
 
             }
 
@@ -64,6 +80,8 @@ void mc_commands::run_command(uint8_t command){
 
 
         case CLEAR_BOARD_CMD:
+
+            led.update_all_leds(255, 0, 0);
         
         break;
 

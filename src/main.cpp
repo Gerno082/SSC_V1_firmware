@@ -45,7 +45,7 @@ mc_freertos rtos;
 mc_commands cmd;
 mc_led      led;
 
-
+mc_database database;
 
 
 
@@ -83,6 +83,8 @@ void setup() {
 
   delay(3000);
 
+
+  Serial.println("LED Init");
   led.init();
 
 
@@ -92,7 +94,7 @@ void setup() {
 
   // button.init();
 
-
+  Serial.println("RTOS Init");
   rtos.init();
 
 }
