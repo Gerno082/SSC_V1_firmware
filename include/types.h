@@ -25,4 +25,31 @@ typedef struct {
 
 
 
+
+
+  enum display_char_type{
+    TEXT_ARRAY,
+    BITMAP_ARRAY
+  };
+
+
+
+typedef struct{
+   unsigned char* item;
+   uint8_t item_type;
+   uint16_t width;
+   uint16_t height;
+}display_item;
+
+
+
+typedef struct{
+  display_item item;
+  uint16_t start_x;
+  uint16_t start_y;
+
+}display_group;
+
+
+
 #endif

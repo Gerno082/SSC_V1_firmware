@@ -5,6 +5,9 @@
 #include <GxEPD2_BW.h>
 #include <Fonts/FreeMonoBold24pt7b.h>
 
+#include "types.h"
+
+
 
 
 
@@ -25,6 +28,22 @@ class mc_display{
     void surgery_screen();
 
     void upload_screen();
+
+
+
+
+    // char* time_arr[] = {""};
+    // char* date_arr[] = {""};
+
+
+    // String timestr = "21:12";
+    // String datestr = "25-JUN";
+
+
+
+
+
+
 
 
 };

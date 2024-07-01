@@ -2,14 +2,46 @@
 #include <Arduino.h>
 #include <SPI.h>
 
+
+#include "types.h"
+
+
+
+
 //Local includes
+#include "main.h"
+#include "HAL/include/images_2.h"
+
+
+
+
+
+
+
+display_item wifi_full = {WifiFull, BITMAP_ARRAY, WifiFull_width, WifiFull_height};
+display_item no_wifi = {NoWifi, BITMAP_ARRAY, WifiFull_width, WifiFull_height};
+
+
+display_group status_bar[2] = {
+
+  { wifi_full /*Char Array*/,  0  /*Start X*/,   20  /*Start Y*/},    //Date
+  { no_wifi   /*Char Array*/,  0  /*Start X*/,   40  /*Start Y*/},    //Time
+
+};
+
+
+
+
+
+
+
+
 #include "HAL/include/mc_display.h"
 
 
 
-#include "main.h"
 
-#include "images.h"
+// #include "images.h"
 
 
 //External variables
